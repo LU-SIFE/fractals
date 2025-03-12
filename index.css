@@ -1,0 +1,64 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.control {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+/* Style the slider's track */
+input[type="range"] {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    height: 8px;
+    background: grey; /* Gray background */
+    border-radius: 5px;
+    outline: none;
+}
+
+.control label {
+    margin-right: auto;
+}
+.control input[type="range"] {
+    margin-left: 20px;
+}
+.control input[type="number"] {
+    width: 60px;
+    margin-left: 20px;
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+hr {
+    width: 100%;
+    background-color: white;
+}
