@@ -1,17 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const exponentInput = document.getElementById('exponent');
+    const exponentRInput = document.getElementById('exponentr');
+    const exponentIInput = document.getElementById('exponenti');
     const maxIterationsInput = document.getElementById('maxIterations');
-    const cRealInput = document.getElementById('cReal');
-    const cImagInput = document.getElementById('cImag');
+    const zRealInput = document.getElementById('zReal');
+    const zImagInput = document.getElementById('zImag');
     const zoomInput = document.getElementById('zoom');
-    const exponentNumber = document.getElementById('exponentNumber');
+    const exponentRNumber = document.getElementById('exponentRNumber');
+    const exponentINumber = document.getElementById('exponentINumber');
     const maxIterationsNumber = document.getElementById('maxIterationsNumber');
-    const cRealNumber = document.getElementById('cRealNumber');
-    const cImagNumber = document.getElementById('cImagNumber');
+    const zRealNumber = document.getElementById('zRealNumber');
+    const zImagNumber = document.getElementById('zImagNumber');
     const zoomNumber = document.getElementById('zoomNumber');
-    const setSelect = document.getElementById('setSelect');  // Dropdown for selecting set type
 
     const redSlider = document.getElementById('redSlider');
     const greenSlider = document.getElementById('greenSlider');
@@ -32,10 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', resizeCanvas);
 
     function syncInputs() {
-        exponentNumber.value = parseFloat(exponentInput.value).toFixed(1);
+        exponentRNumber.value = parseFloat(exponentRInput.value).toFixed(1);
+        exponentINumber.value = parseFloat(exponentIInput.value).toFixed(1);
         maxIterationsNumber.value = maxIterationsInput.value;
-        cRealNumber.value = parseFloat(cRealInput.value).toFixed(2);
-        cImagNumber.value = parseFloat(cImagInput.value).toFixed(2);
+        zRealNumber.value = parseFloat(zRealInput.value).toFixed(2);
+        zImagNumber.value = parseFloat(zImagInput.value).toFixed(2);
         zoomNumber.value = parseFloat(zoomInput.value).toFixed(1);
         redSliderNumber.value = parseFloat(redSlider.value).toFixed(1);
         greenSliderNumber.value = parseFloat(greenSlider.value).toFixed(1);
@@ -43,10 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function syncSliders() {
-        exponentInput.value = exponentNumber.value;
+        exponentRInput.value = exponentRNumber.value;
+        exponentIInput.value = exponentINumber.value;
         maxIterationsInput.value = maxIterationsNumber.value;
-        cRealInput.value = cRealNumber.value;
-        cImagInput.value = cImagNumber.value;
+        zRealInput.value = zRealNumber.value;
+        zImagInput.value = zImagNumber.value;
         zoomInput.value = zoomNumber.value;
         redSlider.value = redSliderNumber.value;
         greenSlider.value = greenSliderNumber.value;
@@ -58,11 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const width = canvas.width;
         const height = canvas.height;
         const maxIterations = parseInt(maxIterationsInput.value, 10);
-        const exponent = parseFloat(exponentInput.value);  // Used for Mandelbrot
-        const cReal = parseFloat(cRealInput.value);
-        const cImag = parseFloat(cImagInput.value);
+        const exponentr = parseFloat(exponentRInput.value);
+        const exponenti = parseFloat(exponentIInput.value);
+        const zReal = parseFloat(zRealInput.value);
+        const zImag = parseFloat(zImagInput.value);
         const zoom = parseFloat(zoomInput.value);
-        const selectedSet = setSelect.value;
         const redIntensity = parseFloat(redSlider.value);
         const greenIntensity = parseFloat(greenSlider.value);
         const blueIntensity = parseFloat(blueSlider.value);
@@ -72,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
             width,
             height,
             maxIterations,
-            exponent,
-            cReal,
-            cImag,
+            exponentr,
+            exponenti,
+            zReal,
+            zImag,
             zoom,
             panX,
             panY,
-            selectedSet,
             redIntensity,
             greenIntensity,
             blueIntensity
@@ -105,9 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    setSelect.addEventListener('change', () => {
-        startRender();
-    });
 
     // Initial synchronization of inputs
     syncInputs();
