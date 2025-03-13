@@ -142,20 +142,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 greenIntensity,
                 blueIntensity,
                 adaptiveResolution,
-                set
+                set,
+                invert
             });
         });
     }
 
     let set = "mandelbrot";
-    function swap() {
-        set = (set === "mandelbrot") ? "julia" : "mandelbrot";
+    let invert = false;
+    function swap(type) {
+        if (type == 1) {
+            if (invert == true) {
+                invert = false;
+            } else {
+                invert = true;
+            }
+        }
+        else if (type == 2) {
+            if (set == 'mandelbrot') {
+                set = 'burning'
+            } else {
+                set = 'mandelbrot'
+            }
+        }
         startRenderThrottled();  // Re-render after swapping
     }
 
     // Bind the swap function to the button
     const swapButton = document.getElementById('swap');
-    swapButton.addEventListener('click', swap);
+    swapButton.addEventListener('click', function() {swap(1)});
+
+    const swapButton2 = document.getElementById('swap2');
+    swapButton2.addEventListener('click', function() {swap(2)});
 
     // Handle input range and number synchronization
     document.querySelectorAll('input[type="range"]').forEach(input => {
