@@ -23,7 +23,7 @@ onmessage = function(event) {
     let idx = 0;
     for (let y = startY; y < endY; y++) {
         for (let x = 0; x < width; x++) {
-            const re = ((x - panX) / width) * 5 / zoom - 3 / zoom;
+            const re = ((x - panX) / width) * 5 / zoom - 2.5 / zoom;
             const im = ((y - panY) / height) * 4 / zoom - 2 / zoom;
             let iterations;
             if (set == "mandelbrot") {
