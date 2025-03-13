@@ -62,3 +62,10 @@ hr {
     width: 100%;
     background-color: white;
 }
+
+#collapse {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+}

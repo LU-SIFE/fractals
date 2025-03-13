@@ -175,6 +175,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const swapButton2 = document.getElementById('swap2');
     swapButton2.addEventListener('click', function() {swap(2)});
 
+    let collapsed = false;
+    const collapse = document.getElementById('collapse');
+    collapse.addEventListener('click', function() {
+        if (collapsed == false) {
+            collapsed = true;
+            collapse.innerHTML = '>';
+            document.getElementById('controls').style.transform = 'translateX(-120%)';
+        } else {
+            collapsed = false;
+            collapse.innerHTML = '<';
+            document.getElementById('controls').style.transform = 'translateX(0)';
+        }
+    })
+
     // Handle input range and number synchronization
     document.querySelectorAll('input[type="range"]').forEach(input => {
         input.addEventListener('input', () => {
