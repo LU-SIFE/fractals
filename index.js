@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
     // Sync input values with numbers for user interface
     function syncInputs() {

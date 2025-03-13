@@ -21,7 +21,7 @@ canvas {
     top: 10px;
     left: 10px;
     z-index: 2;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.4);
     color: white;
     padding: 15px;
     border-radius: 5px;
@@ -68,4 +68,8 @@ hr {
     position: absolute;
     top: 50%;
     left: 1rem;
+}
+
+#swap {
+    margin-right: auto;
 }
