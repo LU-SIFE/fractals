@@ -1,46 +1,47 @@
 onmessage = function(event) {
-    const { width, height, maxIterations, exponentr, exponenti, zReal, zImag, zoom, panX, panY, redIntensity, greenIntensity, blueIntensity } = event.data;
+    const { width, height, startY, endY, maxIterations, exponentr, exponenti, zReal, zImag, zoom, panX, panY, redIntensity, greenIntensity, blueIntensity, set } = event.data;
 
-    const imageData = new Uint8ClampedArray(width * height * 4);
+    const chunkHeight = endY - startY;
+    const imageData = new Uint8ClampedArray(chunkHeight * width * 4);  // Ensure this matches the chunk size
 
-    // General Mandelbrot function with any exponent
     function mandelbrot(re, im, maxIterations, xr, xi, zRe, zIm) {
+        let rSquared = zRe * zRe + zIm * zIm;
         let iteration = 0;
-
-
-        while (zRe * zRe + zIm * zIm <= 4 && iteration < maxIterations) {
-
-            let r = Math.sqrt(zRe * zRe + zIm * zIm);
+        while (rSquared <= 4 && iteration < maxIterations) {
+            let r = Math.sqrt(rSquared);
             let theta = Math.atan2(zIm, zRe);
-
-
-            // Add C to z_n^exponent
             zRe = Math.pow(r, xr) * Math.cos(xr * theta) + re;
             zIm = Math.pow(r, xi) * Math.sin(xi * theta) + im;
-
+            rSquared = zRe * zRe + zIm * zIm;
             iteration++;
         }
-
         return iteration;
     }
+    
+    
 
-    const scale = 1 / zoom;
-    for (let x = 0; x < width; x++) {
-        for (let y = 0; y < height; y++) {
-            const re = ((x - panX) / width) * 5 * scale - 3 * scale;
-            const im = ((y - panY) / height) * 4 * scale - 2 * scale;
-
-            let iterations = mandelbrot(re, im, maxIterations, exponentr, exponenti, zReal, zImag);
-
+    let idx = 0;
+    for (let y = startY; y < endY; y++) {
+        for (let x = 0; x < width; x++) {
+            const re = ((x - panX) / width) * 5 / zoom - 3 / zoom;
+            const im = ((y - panY) / height) * 4 / zoom - 2 / zoom;
+            let iterations;
+            if (set == "mandelbrot") {
+                iterations = mandelbrot(zReal, zImag, maxIterations, exponentr, exponenti, re, im);
+            } else {
+                iterations = mandelbrot(re, im, maxIterations, exponentr, exponenti, zReal, zImag);
+            }
             const colorValue = iterations === maxIterations ? 0 : (255 * iterations / maxIterations);
+            const index = idx * 4;
 
-            const index = (x + y * width) * 4;
-            imageData[index] = colorValue / redIntensity;     // Red component
-            imageData[index + 1] = colorValue / greenIntensity; // Green component
-            imageData[index + 2] = colorValue / blueIntensity;  // Blue component
-            imageData[index + 3] = 255;       // Alpha component
+            imageData[index] = colorValue / redIntensity;
+            imageData[index + 1] = colorValue / greenIntensity;
+            imageData[index + 2] = colorValue / blueIntensity;
+            imageData[index + 3] = 255;  // Alpha component
+
+            idx++;
         }
     }
 
-    postMessage(imageData);
+    postMessage({ imageData, startY, chunkHeight });  // Send chunk data with startY and chunkHeight
 };
